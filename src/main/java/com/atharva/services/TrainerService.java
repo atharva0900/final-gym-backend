@@ -168,6 +168,9 @@ import com.atharva.models.Trainer;
 import com.atharva.repositories.TrainerRepository;
 import com.atharva.responseWrapper.MyResponseWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 
 @Service
 public class TrainerService {
@@ -177,6 +180,10 @@ public class TrainerService {
 
     @Autowired
     private MyResponseWrapper responseWrapper;
+    
+    @Autowired
+    private Cloudinary cloudinary;
+
 
     // ✅ SAFE upload directory (works locally + Render)
     private static final String UPLOAD_DIR = "/tmp/uploads/trainers/";
@@ -195,23 +202,26 @@ public class TrainerService {
         ObjectMapper mapper = new ObjectMapper();
         Trainer trainer = mapper.readValue(trainerJson, Trainer.class);
 
-        // create directory if not exists
-        File dir = new File(UPLOAD_DIR);
-        if (!dir.exists()) dir.mkdirs();
+        // upload to Cloudinary
+        var uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "gym/trainers"
+                )
+        );
 
-        // unique filename
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+        String imageUrl = uploadResult.get("secure_url").toString();
 
-        Files.write(filePath, file.getBytes());
+        trainer.setImageName(imageUrl); // now storing FULL URL
 
-        trainer.setImageName(fileName);
         Trainer savedTrainer = trainerRepository.save(trainer);
 
         responseWrapper.setMessage("Trainer added with image successfully");
         responseWrapper.setData(savedTrainer);
+
         return new ResponseEntity<>(responseWrapper, HttpStatus.CREATED);
     }
+
 
     // ------------------ Get All Trainers ------------------
     public ResponseEntity<?> getAllTrainers() {

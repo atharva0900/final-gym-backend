@@ -112,8 +112,8 @@ public class TrainerController {
     }
 
     // ✅ Get trainer image
-    @GetMapping("/images/{fileName}")
-    public ResponseEntity<?> getTrainerImage(@PathVariable String fileName) throws IOException {
-        return trainerService.getTrainerImage(fileName);
-    }
+//    @GetMapping("/images/{fileName}")
+//    public ResponseEntity<?> getTrainerImage(@PathVariable String fileName) throws IOException {
+//        return trainerService.getTrainerImage(fileName);
+//    }
 }
