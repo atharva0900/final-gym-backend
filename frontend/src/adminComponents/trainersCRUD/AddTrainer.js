@@ -211,9 +211,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
 // const BASE = "http://localhost:8080";
-const BASE = "https://final-gym-backend.onrender.com";
+// const BASE = "https://final-gym-backend.onrender.com";
 
 export default function AddTrainer() {
   const { register, handleSubmit, reset } = useForm();
@@ -238,7 +239,7 @@ export default function AddTrainer() {
       }
 
       // API call
-      const res = await fetch(`${BASE}/api/trainer/with-image`, {
+      const res = await fetch(`${BASE_URL}/api/trainer/with-image`, {
         method: "POST",
         body: formData,
       });
@@ -249,7 +250,7 @@ export default function AddTrainer() {
         Swal.fire(
           "Trainer Added",
           obj.message || "Successfully added!",
-          "success"
+          "success",
         );
         reset();
       } else {

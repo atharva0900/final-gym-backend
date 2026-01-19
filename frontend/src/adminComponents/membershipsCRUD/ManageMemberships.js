@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
-const BASE = "http://localhost:8080";
+// const BASE = "http://localhost:8080";
 
 export default function ManageMemberships() {
   const [list, setList] = useState([]);
   const [status, setStatus] = useState("APPROVED");
 
   const load = async () => {
-    const res = await fetch(`${BASE}/api/memberships/all`);
+    const res = await fetch(`${BASE_URL}/api/memberships/all`);
     const obj = await res.json();
     setList(obj.data || []);
   };
@@ -19,12 +20,12 @@ export default function ManageMemberships() {
 
   const updateStatus = async (id) => {
     const res = await fetch(
-      `${BASE}/api/admin/membership/${id}/status?status=${encodeURIComponent(
-        status
+      `${BASE_URL}/api/admin/membership/${id}/status?status=${encodeURIComponent(
+        status,
       )}`,
       {
         method: "PUT",
-      }
+      },
     );
     if (res.ok) {
       Swal.fire("Updated", "Status updated", "success");
@@ -33,12 +34,12 @@ export default function ManageMemberships() {
     }
     // Fallback to membership controller's PATCH form if exists
     const res2 = await fetch(
-      `${BASE}/api/memberships/${id}/status?status=${encodeURIComponent(
-        status
+      `${BASE_URL}/api/memberships/${id}/status?status=${encodeURIComponent(
+        status,
       )}`,
       {
         method: "PATCH",
-      }
+      },
     );
     if (res2.ok) {
       Swal.fire("Updated", "Status updated", "success");
@@ -50,7 +51,7 @@ export default function ManageMemberships() {
   };
 
   const del = async (id) => {
-    const res = await fetch(`${BASE}/api/memberships/${id}`, {
+    const res = await fetch(`${BASE_URL}/api/memberships/${id}`, {
       method: "DELETE",
     });
     const o = await res.json();

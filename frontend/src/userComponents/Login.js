@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { LoginContext } from "../context/LoginContext";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../mainUrl";
 
 // const BASE = "http://localhost:8080";
-const BASE = "https://final-gym-backend.onrender.com";
+// const BASE = "https://final-gym-backend.onrender.com";
 
 export default function Login() {
   const {
@@ -20,7 +21,7 @@ export default function Login() {
 
   const onSubmit = async (form) => {
     if (form.role === "customer") {
-      const res = await fetch(`${BASE}/api/customers/login`, {
+      const res = await fetch(`${BASE_URL}/api/customers/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, password: form.password }),
@@ -53,13 +54,13 @@ export default function Login() {
         Swal.fire(
           "Failed",
           obj.message || "Invalid customer credentials",
-          "error"
+          "error",
         );
       }
     }
 
     if (form.role === "admin") {
-      const res = await fetch(`${BASE}/api/admin/login`, {
+      const res = await fetch(`${BASE_URL}/api/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: form.email, password: form.password }),
@@ -92,7 +93,7 @@ export default function Login() {
         Swal.fire(
           "Failed",
           obj.message || "Invalid admin credentials",
-          "error"
+          "error",
         );
       }
     }

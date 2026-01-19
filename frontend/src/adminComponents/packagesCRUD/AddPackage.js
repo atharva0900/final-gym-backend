@@ -80,8 +80,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
-const BASE = "http://localhost:8080";
+// const BASE = "http://localhost:8080";
 
 export default function AddPackage() {
   const { register, handleSubmit, reset } = useForm();
@@ -93,7 +94,7 @@ export default function AddPackage() {
       price: parseFloat(f.price),
       durationInMonths: parseInt(f.durationInMonths),
     };
-    const res = await fetch(`${BASE}/api/packages/add`, {
+    const res = await fetch(`${BASE_URL}/api/packages/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -103,7 +104,7 @@ export default function AddPackage() {
       Swal.fire(
         "Package Added",
         obj.message || "Successfully added!",
-        "success"
+        "success",
       );
       reset();
     } else {

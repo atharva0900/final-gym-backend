@@ -36,14 +36,15 @@
 // }
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
-const BASE = "http://localhost:8080";
+// const BASE = "http://localhost:8080";
 
 export default function ManagePackages() {
   const [list, setList] = useState([]);
 
   const load = async () => {
-    const res = await fetch(`${BASE}/api/packages`);
+    const res = await fetch(`${BASE_URL}/api/packages`);
     const obj = await res.json();
     setList(obj.data || []);
   };
@@ -65,7 +66,7 @@ export default function ManagePackages() {
     });
 
     if (result.isConfirmed) {
-      const res = await fetch(`${BASE}/api/admin/package/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/admin/package/${id}`, {
         method: "DELETE",
       });
       const obj = await res.json();
@@ -77,7 +78,7 @@ export default function ManagePackages() {
         Swal.fire(
           "Failed!",
           obj.message || "Could not delete package",
-          "error"
+          "error",
         );
       }
     }

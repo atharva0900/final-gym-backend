@@ -125,14 +125,15 @@
 
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
-const BASE = "http://localhost:8080";
+// const BASE = "http://localhost:8080";
 
 export default function ManageMembers() {
   const [list, setList] = useState([]);
 
   const load = async () => {
-    const res = await fetch(`${BASE}/api/customers/all`);
+    const res = await fetch(`${BASE_URL}/api/customers/all`);
     const obj = await res.json();
     console.log(obj);
 
@@ -156,7 +157,7 @@ export default function ManageMembers() {
     });
 
     if (result.isConfirmed) {
-      const res = await fetch(`${BASE}/api/admin/customer/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/admin/customer/${id}`, {
         method: "DELETE",
       });
       const obj = await res.json();

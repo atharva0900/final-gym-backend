@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BASE_URL } from "../mainUrl";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,9 +21,7 @@ export default function Register() {
   useEffect(() => {
     const checkAdmin = async () => {
       // const res = await fetch("http://localhost:8080/api/admin/exists");
-      const res = await fetch(
-        "https://final-gym-backend.onrender.com/api/admin/exists"
-      );
+      const res = await fetch(`${BASE_URL}/api/admin/exists`);
       if (!res.ok) {
         setAdminExists(false);
         return;
@@ -45,8 +44,8 @@ export default function Register() {
   const onSubmit = async (formData) => {
     const url =
       role === "admin"
-        ? "https://final-gym-backend.onrender.com/api/admin/register"
-        : "https://final-gym-backend.onrender.com/api/customers/register";
+        ? `${BASE_URL}/api/admin/register`
+        : `${BASE_URL}/api/customers/register`;
 
     const payload =
       role === "admin"
@@ -76,7 +75,7 @@ export default function Register() {
       Swal.fire(
         "Success",
         data?.message || "Registered successfully",
-        "success"
+        "success",
       );
       reset();
       if (role === "admin") setAdminExists(true);

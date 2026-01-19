@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import Swal from "sweetalert2";
 import { LoginContext } from "../context/LoginContext";
+import { BASE_URL } from "../mainUrl";
 
 export default function Navbar() {
   const {
@@ -45,7 +46,7 @@ export default function Navbar() {
       Swal.fire(
         "Error",
         "User ID not found in session. Please login again",
-        "error"
+        "error",
       );
       navigate("/login");
       return;
@@ -75,19 +76,19 @@ export default function Navbar() {
       Swal.fire(
         "Error",
         "User not found in session. Please login again",
-        "error"
+        "error",
       );
       return;
     }
 
     try {
       const res = await fetch(
-        `http://localhost:8080/api/customers/update/${session.userId}`,
+        `${BASE_URL}/api/customers/update/${session.userId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       if (res.ok) {
@@ -106,7 +107,7 @@ export default function Navbar() {
             age: updated.age,
             sex: updated.sex,
             weight: updated.weight,
-          })
+          }),
         );
 
         setShowModal(false);

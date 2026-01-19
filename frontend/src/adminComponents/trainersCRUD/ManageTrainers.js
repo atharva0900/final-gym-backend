@@ -1,12 +1,12 @@
 // import React, { useEffect, useState } from "react";
 
-// const BASE = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
 
 // export default function ManageTrainers() {
 //   const [list, setList] = useState([]);
 
 //   const load = async () => {
-//     const res = await fetch(`${BASE}/api/trainer/all-trainer`);
+//     const res = await fetch(`${BASE_URL}/api/trainer/all-trainer`);
 //     const obj = await res.json();
 //     console.log(obj);
 
@@ -53,13 +53,13 @@
 // import React, { useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 
-// const BASE = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
 
 // export default function ManageTrainers() {
 //   const [list, setList] = useState([]);
 
 //   const load = async () => {
-//     const res = await fetch(`${BASE}/api/trainer/all-trainer`);
+//     const res = await fetch(`${BASE_URL}/api/trainer/all-trainer`);
 //     const obj = await res.json();
 //     setList(obj.data || []);
 //   };
@@ -80,7 +80,7 @@
 //     });
 
 //     if (result.isConfirmed) {
-//       const res = await fetch(`${BASE}/api/admin/trainer/${id}`, {
+//       const res = await fetch(`${BASE_URL}/api/admin/trainer/${id}`, {
 //         method: "DELETE",
 //       });
 //       const obj = await res.json();
@@ -145,13 +145,13 @@
 // import React, { useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 
-// const BASE = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
 
 // export default function ManageTrainers() {
 //   const [list, setList] = useState([]);
 
 //   const load = async () => {
-//     const res = await fetch(`${BASE}/api/trainer/all-trainer`);
+//     const res = await fetch(`${BASE_URL}/api/trainer/all-trainer`);
 //     const obj = await res.json();
 //     setList(obj.data || []);
 //   };
@@ -172,7 +172,7 @@
 //     });
 
 //     if (result.isConfirmed) {
-//       const res = await fetch(`${BASE}/api/admin/trainer/${id}`, {
+//       const res = await fetch(`${BASE_URL}/api/admin/trainer/${id}`, {
 //         method: "DELETE",
 //       });
 //       const obj = await res.json();
@@ -250,13 +250,13 @@
 // import React, { useEffect, useState } from "react";
 // import Swal from "sweetalert2";
 
-// const BASE = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
 
 // export default function ManageTrainers() {
 //   const [list, setList] = useState([]);
 
 //   const load = async () => {
-//     const res = await fetch(`${BASE}/api/trainer/all-trainer`);
+//     const res = await fetch(`${BASE_URL}/api/trainer/all-trainer`);
 //     const obj = await res.json();
 //     setList(obj.data || []);
 //   };
@@ -277,7 +277,7 @@
 //     });
 
 //     if (result.isConfirmed) {
-//       const res = await fetch(`${BASE}/api/admin/trainer/${id}`, {
+//       const res = await fetch(`${BASE_URL}/api/admin/trainer/${id}`, {
 //         method: "DELETE",
 //       });
 //       const obj = await res.json();
@@ -354,16 +354,17 @@
 
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../mainUrl";
 
-// const BASE = "http://localhost:8080";
-const BASE = "https://final-gym-backend.onrender.com";
+// const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "https://final-gym-backend.onrender.com";
 
 export default function ManageTrainers() {
   const [list, setList] = useState([]);
 
   // 🔹 Load Trainers
   const load = async () => {
-    const res = await fetch(`${BASE}/api/trainer/all-trainer`);
+    const res = await fetch(`${BASE_URL}/api/trainer/all-trainer`);
     const obj = await res.json();
     setList(obj.data || []);
   };
@@ -385,7 +386,7 @@ export default function ManageTrainers() {
     });
 
     if (result.isConfirmed) {
-      const res = await fetch(`${BASE}/api/admin/trainer/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/admin/trainer/${id}`, {
         method: "DELETE",
       });
       const obj = await res.json();
@@ -397,7 +398,7 @@ export default function ManageTrainers() {
         Swal.fire(
           "Failed!",
           obj.message || "Could not delete trainer",
-          "error"
+          "error",
         );
       }
     }
@@ -427,7 +428,7 @@ export default function ManageTrainers() {
                 <td>
                   {t.imageName ? (
                     <img
-                      src={`${BASE}/api/trainer/images/${t.imageName}`}
+                      src={t.imageName}
                       alt={t.name}
                       width="80"
                       height="80"
