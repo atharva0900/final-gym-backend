@@ -1,4 +1,4 @@
 [build]
-    base="fontend"
+    base="frontend"
     command="npm run build"
     publish="frontend/build"
